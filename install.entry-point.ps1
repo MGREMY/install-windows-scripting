@@ -23,3 +23,8 @@ Add-AppxPackage -Path "winget_setup.msix"
 
 # delete file
 Remove-Item "winget_setup.msix"
+
+
+# Starting installation scripts
+.\scripts\install.wsl_installs.ps1
+.\scripts\install.winget_installs.ps1
