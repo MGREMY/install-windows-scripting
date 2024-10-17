@@ -54,7 +54,15 @@ function Multi-Install {
 ";
 
 		echo $configFileContent > $configFilePath;
+
+
+		$includeIfConfig = @'
+[includeif "gitdir:~/source/repos/$($configName)/"]
+        path = ~/source/repos/$($configName)/.gitconfig-$($configName)
+';
 	}
+
+		echo $includeIfConfig > "$(Ã$homeDirectory)\.gitconfig"
 }
 
 function Signle-Install {
