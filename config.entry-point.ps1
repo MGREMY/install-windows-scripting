@@ -9,3 +9,4 @@
 
 # Starting installation scripts
 .\scripts\config.git.ps1
+.\scripts\config.node.ps1
