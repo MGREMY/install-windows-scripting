@@ -7,6 +7,8 @@
 
 #Requires -RunAsAdministrator
 
+Write-Host "Installing Winget Package manager"
+
 # INSTALLATION OF WINGET
 $WINGET_URL = "https://api.github.com/repos/microsoft/winget-cli/releases/latest"
 $WINGET_URL = (Invoke-WebRequest -Uri $WINGET_URL).Content | ConvertFrom-Json |
@@ -23,6 +25,7 @@ Add-AppxPackage -Path "winget_setup.msix"
 # delete file
 Remove-Item "winget_setup.msix"
 
+Write-Host "Starting install scripts"
 
 # Starting installation scripts
 .\scripts\install.wsl_installs.ps1

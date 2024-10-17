@@ -2,6 +2,8 @@
 
 #Requires -RunAsAdministrator
 
+Write-Host "Installing WinGet applications"
+
 winget install -e --id 7zip.7zip;
 winget install -e --id Docker.DockerDesktop;
 winget install -e --id Git.Git;

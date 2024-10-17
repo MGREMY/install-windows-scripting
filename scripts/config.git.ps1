@@ -1,17 +1,23 @@
 # Configure Git script
 
+Write-Host "Getting required variables"
+
 $homeDirectory = $env:USERPROFILE
 
-$isMultiConfig = Read-Host "Does the git installation require multiple .gitconfig files? [y/yes n/no]"
+Write-Host "Defining functions"
 
 function Base-Config {
     Write-Host "Starting base config process"
+
+    Write-Host "Generating ssh keys"
 
     # Create SSH directory
     New-Item -Path "$homeDirectory" -Name ".ssh" -ItemType "directory"
 
     # Generate SSH key
     ssh-keygen -b 4096 -t rsa -f "$homeDirectory\.ssh\id_rsa"
+
+    Write-Host "Setting basic git configuration globally"
 
     # Global Git configuration
     git config --global core.editor "code --wait"
@@ -31,6 +37,8 @@ function Multi-Install {
 
     Write-Host "Multi config is going to be setup in the directory $homeDirectory\source\repos"
 
+    Write-Host "Creating required directories"
+
     New-Item -Path "$homeDirectory" -Name "source" -ItemType "directory"
     New-Item -Path "$homeDirectory\source" -Name "repos" -ItemType "directory"
 
@@ -39,6 +47,9 @@ function Multi-Install {
         $configName = Read-Host "What's the name of the configuration (empty if no other configurations); name cannot be 'NONE'"
 
         if ($configName -ne "") {
+	    Write-Host "Creating required directory and config file"
+
+
             New-Item -Path "$homeDirectory\source\repos" -Name "$configName" -ItemType "directory"
             $configFilePath = "$homeDirectory\source\repos\$configName\.gitconfig-$configName"
             New-Item -Path "$homeDirectory\source\repos\$configName" -Name ".gitconfig-$configName" -ItemType "file"
@@ -53,6 +64,8 @@ function Multi-Install {
 "@
 
             Set-Content -Path $configFilePath -Value $configFileContent
+
+	    Write-Host "Patching .gitconfig base file"
 
             $includeIfConfig = @"
 [includeif "gitdir:~/source/repos/$configName/"]
@@ -72,9 +85,15 @@ function Single-Install {
     $configUserName = Read-Host "What's the git username?"
     $configUserEmail = Read-Host "What's the git email?"
 
+    Write-Host "Setting up git user informations"
+
     git config --global user.name $configUserName
     git config --global user.email $configUserEmail
 }
+
+Write-Host "Starting script"
+
+$isMultiConfig = Read-Host "Does the git installation require multiple .gitconfig files? [y/yes n/no]"
 
 if ($isMultiConfig -eq "y" -or $isMultiConfig -eq "yes") {
     Multi-Install
