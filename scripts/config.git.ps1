@@ -23,13 +23,38 @@ function Base-Config {
         git config --global commit.gpgSign true;
         git config --global gpg.format ssh;
         git config --global alias.lg "log --graph --abbrev-commit --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'";
-	git config --global user.signingKey "$($homeDirectory)\.ssh\id_rsa.pub"
+	git config --global user.signingKey "$($homeDirectory)\.ssh\id_rsa.pub";
 }
 
 function Multi-Install {
 	echo "Starting a multi install process";
 
 	Base-Config;
+
+	echo "Multi config is going to be setup in the directory $($homeDirectory)\source\repos";
+
+	New-Item -Path "$($homeDirectory)" -Name "source" -ItemType "directory";
+	New-Item -Path "$($homeDirectory)\source" -Name "repos" -ItemType "directory";
+
+	$configName = "NONE"
+	while ($configName -ne "") {
+		$configName = Read-Host "What's the name of the configuration (empty if no other configurations) ; name cannot be 'NONE'";
+
+		New-Item "$($homeDirectory)\source\repos" -Name "$($configName)" -ItemType "directory";
+		$configFilePath = "$($homeDirectory)\source\repos\$($configName)\.gitconfig-$($configName)";
+		New-Item "$($homeDirectory)\source\repos\$($configName)" -Name ".gitconfig-$($configName)" -ItemType "file";
+
+		$configUserName = Read-Host "What's the git username ?";
+		$configUserEmail = Read-Host "What's the git email ?";
+
+		$configFileContent = @"
+[user]
+	name = $($configUserName)
+	email = $($configUserEmail)
+";
+
+		echo $configFileContent > $configFilePath;
+	}
 }
 
 function Signle-Install {
