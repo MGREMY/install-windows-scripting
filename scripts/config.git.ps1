@@ -1,6 +1,4 @@
-<#
-	configure git script
-#>
+#	configure git script
 
 
 $homeDirectory = $env:USERPROFILE;

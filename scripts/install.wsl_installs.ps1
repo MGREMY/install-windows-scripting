@@ -1,6 +1,4 @@
-<#
-	install and configure WSL2
-#>
+#	install and configure WSL2
 
 #Requires -RunAsAdministrator
 

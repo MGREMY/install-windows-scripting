@@ -1,6 +1,4 @@
-<#
-	install software with winget package manager
-#>
+#	install software with winget package manager
 
 #Requires -RunAsAdministrator
 

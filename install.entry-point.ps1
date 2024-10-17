@@ -1,10 +1,9 @@
-<#
-	entrypoint of the installation process
-	######################################
-	created by : MGREMY
-	created the : 17/10/2024
-	######################################
-#>
+#	entrypoint of the installation process
+#	######################################
+#	created by : MGREMY
+#	created the : 17/10/2024
+#	######################################
+
 
 #Requires -RunAsAdministrator
 
